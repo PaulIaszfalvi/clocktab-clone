@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClockService } from '../services/clock.service';
 
@@ -7,18 +7,35 @@ import { ClockService } from '../services/clock.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './clock-display.component.html',
-  styleUrl: './clock-display.component.scss'
+  styleUrl: './clock-display.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClockDisplayComponent implements OnInit {
-  time: { time: string; period: string } = { time: '00:00', period: 'AM' };
-  date: string = '';
+  displayTime = '';
+  seconds = '00';
+  period = '';
+  fullDate = '';
 
-  constructor(private clockService: ClockService) {}
+  constructor(private clockService: ClockService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.clockService.getTime().subscribe(currentTime => {
-      this.time = this.clockService.formatTime(currentTime);
-      this.date = this.clockService.formatDate(currentTime);
-    });
+    this.clockService.getTime()
+      .subscribe(time => {
+        const formatted = this.clockService.formatTime(time);
+        this.displayTime = formatted.time;
+        this.seconds = formatted.seconds;
+        this.period = formatted.period;
+        this.fullDate = this.clockService.formatDate(time);
+        this.cdr.markForCheck();
+      });
+  }
+
+  toggleFullscreen(): void {
+    const element = document.documentElement;
+    if (!document.fullscreenElement) {
+      element.requestFullscreen().catch(err => console.error(err));
+    } else {
+      document.exitFullscreen().catch(err => console.error(err));
+    }
   }
 }

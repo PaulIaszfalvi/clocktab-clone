@@ -4,77 +4,138 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0d1425 100%);
+  background: #000000;
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+}
+
+.options-bar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(232, 232, 232, 0.05);
+  border-radius: 0 0 8px 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+}
+
+.clock-container:hover .options-bar {
+  opacity: 1;
+}
+
+.fullscreen-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #e8e8e8;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.fullscreen-btn:hover {
+  color: #fff;
 }
 
 .clock-content {
   text-align: center;
   color: #e8e8e8;
+  position: relative;
+  z-index: 1;
 }
 
 .time-display {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
   gap: 1.5rem;
-  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  position: relative;
 }
 
 .time {
-  font-size: 120px;
+  font-size: 135px;
   font-weight: 300;
   line-height: 1;
-  letter-spacing: -2px;
-  font-family: 'SF Display', -apple-system, sans-serif;
+  letter-spacing: -4px;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #e8e8e8;
+}
+
+.right-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  padding-top: 0;
 }
 
 .period {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 32px;
+  font-size: 48px;
   font-weight: 300;
   letter-spacing: 1px;
-  padding-top: 8px;
+  color: #e8e8e8;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.seconds {
+  font-size: 56px;
+  font-weight: 300;
+  color: #a0a0a0;
+  line-height: 1;
 }
 
 .date-display {
   font-size: 24px;
   font-weight: 300;
-  letter-spacing: 1px;
-  color: #a0a0a0;
+  letter-spacing: 2px;
+  color: #888fa8;
   text-transform: uppercase;
 }
 
 @media (max-width: 768px) {
-  .time {
-    font-size: 72px;
+  .right-group {
+    padding-top: 0;
   }
 
   .period {
-    font-size: 20px;
-    padding-top: 4px;
+    font-size: 32px;
+  }
+
+  .seconds {
+    font-size: 40px;
   }
 
   .date-display {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 
 @media (max-width: 480px) {
-  .time {
-    font-size: 48px;
+  .right-group {
+    padding-top: 0;
   }
 
   .period {
-    font-size: 16px;
+    font-size: 20px;
+  }
+
+  .seconds {
+    font-size: 20px;
   }
 
   .date-display {
-    font-size: 12px;
+    font-size: 16px;
   }
 }

@@ -1,11 +1,19 @@
 <div class="clock-container">
+  <div class="options-bar">
+    <button class="fullscreen-btn" (click)="toggleFullscreen()" title="Toggle Fullscreen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+      </svg>
+    </button>
+  </div>
   <div class="clock-content">
     <div class="time-display">
-      <span class="time">{{ time.time }}</span>
-      <span class="period">{{ time.period }}</span>
+      <span class="time">{{ displayTime }}</span>
+      <div class="right-group">
+        <div class="period">{{ period }}</div>
+        <span class="seconds">{{ seconds }}</span>
+      </div>
     </div>
-    <div class="date-display">
-      {{ date }}
-    </div>
+    <div class="date-display">{{ fullDate }}</div>
   </div>
 </div>

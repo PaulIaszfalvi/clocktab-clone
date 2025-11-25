@@ -19,7 +19,7 @@ export class ClockService {
     return this.currentTime$.asObservable();
   }
 
-  formatTime(date: Date): { time: string; period: string } {
+  formatTime(date: Date): { time: string; seconds: string; period: string } {
     const hours = date.getHours();
     const minutes = date.getMinutes();
     const seconds = date.getSeconds();
@@ -28,6 +28,7 @@ export class ClockService {
 
     return {
       time: `${String(displayHours).padStart(2, ' ')}:${String(minutes).padStart(2, '0')}`,
+      seconds: String(seconds).padStart(2, '0'),
       period
     };
   }
