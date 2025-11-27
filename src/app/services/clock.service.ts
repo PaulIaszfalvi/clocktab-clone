@@ -1,22 +1,26 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, interval, Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Injectable, OnDestroy } from '@angular/core';
+import { interval, Observable } from 'rxjs';
+import { map, startWith, shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ClockService {
-  private currentTime$ = new BehaviorSubject<Date>(new Date());
+export class ClockService implements OnDestroy {
+  private time$: Observable<Date>;
 
   constructor() {
-    interval(1000).pipe(
+    this.time$ = interval(1000).pipe(
       map(() => new Date()),
-      startWith(new Date())
-    ).subscribe(time => this.currentTime$.next(time));
+      startWith(new Date()),
+      shareReplay(1)
+    );
   }
 
   getTime(): Observable<Date> {
-    return this.currentTime$.asObservable();
+    return this.time$;
+  }
+
+  ngOnDestroy(): void {
   }
 
   formatTime(date: Date): { time: string; seconds: string; period: string } {
