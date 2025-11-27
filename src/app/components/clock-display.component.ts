@@ -17,14 +17,12 @@ export class ClockDisplayComponent implements OnInit {
   period = '';
   fullDate = '';
   private clockContainer: HTMLElement | null = null;
-  private optionsBar: HTMLElement | null = null;
   private destroyRef = inject(DestroyRef);
 
   constructor(private clockService: ClockService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.clockContainer = document.querySelector('.clock-container');
-    this.optionsBar = document.querySelector('.options-bar');
     this.clockService.getTime()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(time => {
@@ -33,15 +31,8 @@ export class ClockDisplayComponent implements OnInit {
         this.seconds = formatted.seconds;
         this.period = formatted.period;
         this.fullDate = this.clockService.formatDate(time);
-        this.hideButton();
         this.cdr.markForCheck();
       });
-  }
-
-  private hideButton(): void {
-    if (this.optionsBar) {
-      this.optionsBar.style.opacity = '0';
-    }
   }
 
   toggleFullscreen(): void {
