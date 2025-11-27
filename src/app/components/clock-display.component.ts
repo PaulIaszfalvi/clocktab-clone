@@ -15,10 +15,12 @@ export class ClockDisplayComponent implements OnInit {
   seconds = '00';
   period = '';
   fullDate = '';
+  clockContainer: HTMLElement | null = null;
 
   constructor(private clockService: ClockService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    this.clockContainer = document.querySelector('.clock-container');
     this.clockService.getTime()
       .subscribe(time => {
         const formatted = this.clockService.formatTime(time);
@@ -31,9 +33,10 @@ export class ClockDisplayComponent implements OnInit {
   }
 
   toggleFullscreen(): void {
-    const element = document.documentElement;
+    if (!this.clockContainer) return;
+    
     if (!document.fullscreenElement) {
-      element.requestFullscreen().catch(err => console.error(err));
+      this.clockContainer.requestFullscreen().catch(err => console.error(err));
     } else {
       document.exitFullscreen().catch(err => console.error(err));
     }

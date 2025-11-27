@@ -29,6 +29,10 @@
   opacity: 1;
 }
 
+.clock-container:fullscreen .options-bar {
+  opacity: 0 !important;
+}
+
 .fullscreen-btn {
   background: none;
   border: none;
